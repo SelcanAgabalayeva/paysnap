@@ -3,7 +3,7 @@ package com.paysnap.paysnap.security;
 
 import com.paysnap.paysnap.entity.User;
 import com.paysnap.paysnap.repositories.UserRepository;
-import com.paysnap.paysnap.service.JwtBlacklistService;
+import com.paysnap.paysnap.service.impls.JwtBlacklistService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

@@ -1,4 +1,4 @@
-package com.paysnap.paysnap.service;
+package com.paysnap.paysnap.service.impls;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.StringRedisTemplate;

@@ -37,7 +37,7 @@ public class ReceiptServiceImpl implements ReceiptService {
 
         byte[] pdfBytes = out.toByteArray();
 
-        // 📧 EMAIL GÖNDƏR
+        //  EMAIL GÖNDƏR
         emailService.sendReceiptEmail(
                 order.getUser().getEmail(),
                 order,

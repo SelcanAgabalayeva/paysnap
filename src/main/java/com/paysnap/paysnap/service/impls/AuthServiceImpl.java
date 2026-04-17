@@ -9,7 +9,6 @@ import com.paysnap.paysnap.entity.User;
 import com.paysnap.paysnap.repositories.UserRepository;
 import com.paysnap.paysnap.security.JwtUtil;
 import com.paysnap.paysnap.service.AuthService;
-import com.paysnap.paysnap.service.JwtBlacklistService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
