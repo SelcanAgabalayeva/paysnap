@@ -7,6 +7,7 @@ import com.paysnap.paysnap.service.AuthService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +28,7 @@ public class AuthController {
     public AuthResponse login(@Valid @RequestBody LoginDto request) {
         return authService.login(request);
     }
-
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/logout")
     public void logout(HttpServletRequest request) {
 

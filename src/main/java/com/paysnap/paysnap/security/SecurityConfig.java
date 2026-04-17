@@ -32,11 +32,22 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
+
+                        // 🔓 public
                         .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/webhook/stripe").permitAll()
+
+                        // 👤 USER + ADMIN
+                        .requestMatchers("/api/orders/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/api/qr/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/api/receipts/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/api/auth/register", "/api/auth/login").permitAll()
+
+                        .requestMatchers("/api/auth/logout").authenticated()
+
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-
         return http.build();
     }
 }
