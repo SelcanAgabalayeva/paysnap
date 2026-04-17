@@ -42,11 +42,12 @@ public class JwtFilter extends OncePerRequestFilter {
 
         String token = authHeader.substring(7);
 
-// 🔥 BURANI ƏLAVƏ ET
+// ✅ BLACKLIST CHECK
         if (blacklistService.isBlacklisted(token)) {
-            filterChain.doFilter(request, response);
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return;
         }
+
         String username = jwtUtil.validateTokenAndGetUsername(token);
 
         if (username != null) {
