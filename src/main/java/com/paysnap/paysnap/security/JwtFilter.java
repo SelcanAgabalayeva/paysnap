@@ -3,6 +3,7 @@ package com.paysnap.paysnap.security;
 
 import com.paysnap.paysnap.entity.User;
 import com.paysnap.paysnap.repositories.UserRepository;
+import com.paysnap.paysnap.service.JwtBlacklistService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,6 +25,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
     private final UserRepository userRepository;
+    private final JwtBlacklistService blacklistService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -39,6 +41,12 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
         String token = authHeader.substring(7);
+
+// 🔥 BURANI ƏLAVƏ ET
+        if (blacklistService.isBlacklisted(token)) {
+            filterChain.doFilter(request, response);
+            return;
+        }
         String username = jwtUtil.validateTokenAndGetUsername(token);
 
         if (username != null) {
@@ -46,7 +54,7 @@ public class JwtFilter extends OncePerRequestFilter {
                     .orElseThrow(() -> new RuntimeException("User not found"));
 
             List<GrantedAuthority> authorities = List.of(
-                    new SimpleGrantedAuthority(user.getRole().name())
+                    new SimpleGrantedAuthority("ROLE_" + user.getRole().name())
             );
 
             UsernamePasswordAuthenticationToken auth =

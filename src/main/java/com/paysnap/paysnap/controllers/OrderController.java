@@ -5,6 +5,7 @@ import com.paysnap.paysnap.dtos.OrderDto;
 import com.paysnap.paysnap.service.OrderService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -13,6 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/orders")
 @RequiredArgsConstructor
+@PreAuthorize("hasAnyRole('USER','ADMIN')")
 public class OrderController {
 
     private final OrderService service;
